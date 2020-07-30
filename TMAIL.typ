@@ -23,7 +23,7 @@ is
   ------------------------------------------------------------------------
   -- author = sparshukov
   ------------------------------------------------------------------------
-  -- конструктор - все элементы объекта нужно инициализировать для простоты работы с ними в дальнейшем
+  -- ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° - ГўГ±ГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ» Г®ГЎГєГҐГЄГІГ  Г­ГіГ¦Г­Г® ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°Г®ГўГ ГІГј Г¤Г«Гї ГЇГ°Г®Г±ГІГ®ГІГ» Г°Г ГЎГ®ГІГ» Г± Г­ГЁГ¬ГЁ Гў Г¤Г Г«ГјГ­ГҐГ©ГёГҐГ¬
   static function MailCreate( p_MailSubj        varchar2,
                               p_MailBody        clob,
                               p_attach_names    TStringList,
@@ -60,7 +60,7 @@ is
       if p_recip.count=0 then 
          SetRecipients;
       end if;
-      -- проверка переданного списка е-майлов на вшивость по маске
+      -- ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГҐГ°ГҐГ¤Г Г­Г­Г®ГЈГ® Г±ГЇГЁГ±ГЄГ  ГҐ-Г¬Г Г©Г«Г®Гў Г­Г  ГўГёГЁГўГ®Г±ГІГј ГЇГ® Г¬Г Г±ГЄГҐ
       for i in p_recip.first .. p_recip.last
       loop
           select count(1) into rs from (select p_recip(i) email from dual) where email like '%_@_%._%';
@@ -78,11 +78,11 @@ is
       then 
         execute immediate 'select lower(case when user in (''DEPSTAT'',''TRANSFORMER'', ''LDWH'') then osuser else osuser end) usr from v$session where sid=sys_context(''userenv'',''sid'')' into usr;
       end if;
-      eml := case when usr='sparshukov'   then 'sergey.parshukov@megafon.ru'
-                  when usr='rkrikunov'    then 'ruslan.krikunov@megafon.ru'
-                  when usr='vivakin'      then 'vladimir.ivakin@MegaFon.ru'
-                  when usr='levenets_ee'  then 'Evgeny.Levenets@MegaFon.ru'
-                  when usr='taranenko_aa' then 'Alexander.Taranenko@MegaFon.ru'
+      eml := case when usr='sparshukov'   then 'sp@domain.ru'
+                  when usr='rkrikunov'    then 'rk@domain.ru'
+                  when usr='vivakin'      then 'vk@domain.ru'
+                  when usr='levenets_ee'  then 'El@domain.ru'
+                  when usr='taranenko_aa' then 'ak@domain.ru'
              end; 
       Recipients := TStringList( eml );
     end if;
@@ -129,11 +129,11 @@ is
       end;
     else
       l_sendres := -10;
-      l_errmsg  := 'нет списка получателей';
+      l_errmsg  := 'Г­ГҐГІ Г±ГЇГЁГ±ГЄГ  ГЇГ®Г«ГіГ·Г ГІГҐГ«ГҐГ©';
     end if;
 
     ------------------------------------------------------------
-    -- если отправка по почте не удалась
+    -- ГҐГ±Г«ГЁ Г®ГІГЇГ°Г ГўГЄГ  ГЇГ® ГЇГ®Г·ГІГҐ Г­ГҐ ГіГ¤Г Г«Г Г±Гј
     if l_sendres < 0 then 
       select count(1) into l_res from user_tables where table_name = 'NOT_SENDED_EMAIL';
       ------------------------------------------------------------
@@ -153,7 +153,7 @@ is
                           error_msg   varchar2(1000)  
                          )
                          pctfree 0 ';
-        execute immediate 'comment on table not_sended_EMAIL is ''Вложения не отправленные объектом TMAIL по причине err_msg''';
+        execute immediate 'comment on table not_sended_EMAIL is ''Г‚Г«Г®Г¦ГҐГ­ГЁГї Г­ГҐ Г®ГІГЇГ°Г ГўГ«ГҐГ­Г­Г»ГҐ Г®ГЎГєГҐГЄГІГ®Г¬ TMAIL ГЇГ® ГЇГ°ГЁГ·ГЁГ­ГҐ err_msg''';
       end if;
       
       ------------------------------------------------------------
@@ -188,7 +188,7 @@ is
           end loop;
       end if;
       commit;
-    end if; -- если отправка по почте не удалась
+    end if; -- ГҐГ±Г«ГЁ Г®ГІГЇГ°Г ГўГЄГ  ГЇГ® ГЇГ®Г·ГІГҐ Г­ГҐ ГіГ¤Г Г«Г Г±Гј
     
     return l_sendres;
   exception 
