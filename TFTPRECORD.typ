@@ -20,7 +20,7 @@ as
   ------------------------------------------------------------------------
   -- author = sparshukov
   ------------------------------------------------------------------------
-  -- конструктор - все элементы объекта нужно инициализировать для простоты работы с ними в дальнейшем
+  -- ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° - ГўГ±ГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ» Г®ГЎГєГҐГЄГІГ  Г­ГіГ¦Г­Г® ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°Г®ГўГ ГІГј Г¤Г«Гї ГЇГ°Г®Г±ГІГ®ГІГ» Г°Г ГЎГ®ГІГ» Г± Г­ГЁГ¬ГЁ Гў Г¤Г Г«ГјГ­ГҐГ©ГёГҐГ¬
   static function ftpCreate(p_filenames TstringList, p_files TclobList, p_isArch number default 0) return TftpRecord
   is
   begin
@@ -28,7 +28,7 @@ as
   end;
 
   ------------------------------------------------------------------------
-  -- получение одного хоста
+  -- ГЇГ®Г«ГіГ·ГҐГ­ГЁГҐ Г®Г¤Г­Г®ГЈГ® ГµГ®Г±ГІГ 
   member function GetOneRecip(/*self in out tftprecord,*/p_recip in varchar2, 
             p_fHost in out varchar2, p_fLogin in out varchar2, 
             p_fPass in out varchar2, p_fPath in out varchar2) return number
@@ -58,7 +58,7 @@ as
   end;
 
   ------------------------------------------------------------------------
-  -- установка списка хостов
+  -- ГіГ±ГІГ Г­Г®ГўГЄГ  Г±ГЇГЁГ±ГЄГ  ГµГ®Г±ГІГ®Гў
   member procedure SetRecipients(p_recip in varchar2) 
   Is
   begin
@@ -66,7 +66,7 @@ as
   end;
   
   ------------------------------------------------------------------------
-  -- установка списка хостов
+  -- ГіГ±ГІГ Г­Г®ГўГЄГ  Г±ГЇГЁГ±ГЄГ  ГµГ®Г±ГІГ®Гў
   member procedure SetRecipients(p_recip in TStringList default null)
   is
     ts     TStringList := TStringList();
@@ -83,7 +83,7 @@ as
       if p_recip.count=0 then 
          SetRecipients;
       end if;
-      -- проверка переданного списка е-майлов на вшивость по маске
+      -- ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГҐГ°ГҐГ¤Г Г­Г­Г®ГЈГ® Г±ГЇГЁГ±ГЄГ  ГҐ-Г¬Г Г©Г«Г®Гў Г­Г  ГўГёГЁГўГ®Г±ГІГј ГЇГ® Г¬Г Г±ГЄГҐ
       for i in p_recip.first .. p_recip.last
       loop
         --select count(1) into rs from (select p_recip(i) ftpadr from dual) where ftpadr like '%:%@%';
@@ -92,7 +92,7 @@ as
           ts.extend;
           ts(ts.count) := p_recip(i);
         else
-          dbms_output.put_line('адрес : '||p_recip(i)||' не прошел контроль на валидность для FTP');
+          dbms_output.put_line('Г Г¤Г°ГҐГ± : '||p_recip(i)||' Г­ГҐ ГЇГ°Г®ГёГҐГ« ГЄГ®Г­ГІГ°Г®Г«Гј Г­Г  ГўГ Г«ГЁГ¤Г­Г®Г±ГІГј Г¤Г«Гї FTP');
         end if;
       end loop;
       recipList := ts;
@@ -104,20 +104,20 @@ as
       then 
         execute immediate 'select lower(case when user in (''DEPSTAT'',''TRANSFORMER'', ''LDWH'') then osuser else osuser end) usr from v$session where sid=sys_context(''userenv'',''sid'')' into usr;
       end if;
-      ftpadr := case when usr='sparshukov'   then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/sparshukov'
-                     when usr='rkrikunov'    then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/rkrikunov'
-                     when usr='skhizhnjak'   then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/skhizhnjak'
-                     when usr='rvasin'       then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/rvasin'
-                     when usr='vasin_rs'     then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/rvasin'
-                     when usr='drastvorov'   then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/drastvorov'
-                     when usr='rastvorov_db' then 'ftp://ftpuser:ftp21gfcc@10.61.24.210/drastvorov'
+      ftpadr := case when usr='sparshukov'   then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/sp'
+                     when usr='rkrikunov'    then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/kr'
+                     when usr='skhizhnjak'   then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/sk'
+                     when usr='rvasin'       then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/rv'
+                     when usr='vasin_rs'     then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/rv'
+                     when usr='drastvorov'   then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/dr'
+                     when usr='rastvorov_db' then 'ftp://ftpuser:ftp21gfcc@10.61.0.0/dr'
                 end; 
       recipList := TStringList( ftpadr );
     end if;
   end;
   
 /*  ------------------------------------------------------------------------
-  -- отправка отчетов
+  -- Г®ГІГЇГ°Г ГўГЄГ  Г®ГІГ·ГҐГІГ®Гў
   member procedure SaveToTab(p_fname varchar2, p_file clob, p_err varchar2)
   is
     l_job_id  number        := sys_context('jm_ctx','job_id');
@@ -130,7 +130,7 @@ as
 */
 
   ------------------------------------------------------------------------
-  -- отправка отчетов
+  -- Г®ГІГЇГ°Г ГўГЄГ  Г®ГІГ·ГҐГІГ®Гў
   member function SendReport return number
   is
     l_conn  UTL_TCP.connection;
@@ -141,10 +141,10 @@ as
     fPath   varchar2(500);
     l_syst  varchar2(100);
 
-    l_sendres number        := 0; -- результат работы функции (0-успех, <0 - ошибка)
+    l_sendres number        := 0; -- Г°ГҐГ§ГіГ«ГјГІГ ГІ Г°Г ГЎГ®ГІГ» ГґГіГ­ГЄГ¶ГЁГЁ (0-ГіГ±ГЇГҐГµ, <0 - Г®ГёГЁГЎГЄГ )
     l_errmsg  varchar2(1000):='';    
   
-    -- вложенная функция (не удается вызвать как член класса-member procedure)  
+    -- ГўГ«Г®Г¦ГҐГ­Г­Г Гї ГґГіГ­ГЄГ¶ГЁГї (Г­ГҐ ГіГ¤Г ГҐГІГ±Гї ГўГ»Г§ГўГ ГІГј ГЄГ ГЄ Г·Г«ГҐГ­ ГЄГ«Г Г±Г±Г -member procedure)  
     procedure SaveToTab(p_recip varchar2, p_fname varchar2, p_file clob, p_err varchar2)
     is
       l_job_id  number        := sys_context('jm_ctx','job_id');
@@ -182,7 +182,7 @@ as
               select idanytable_seq.nextval into :new.iid from dual;
             end;';
                                  
-        execute immediate 'comment on table not_sended_FTP is ''Вложения не отправленные объектом TFTPRECORD по причине err_msg''';
+        execute immediate 'comment on table not_sended_FTP is ''Г‚Г«Г®Г¦ГҐГ­ГЁГї Г­ГҐ Г®ГІГЇГ°Г ГўГ«ГҐГ­Г­Г»ГҐ Г®ГЎГєГҐГЄГІГ®Г¬ TFTPRECORD ГЇГ® ГЇГ°ГЁГ·ГЁГ­ГҐ err_msg''';
       end if;
 
       ------------------------------------------------------------
@@ -207,7 +207,7 @@ as
                 l_res := l_res + 1;
       commit;
             
-    end; -- конец вложенной функции SaveToTab
+    end; -- ГЄГ®Г­ГҐГ¶ ГўГ«Г®Г¦ГҐГ­Г­Г®Г© ГґГіГ­ГЄГ¶ГЁГЁ SaveToTab
     
     
 ------------------------------------------------------------- 
@@ -216,7 +216,7 @@ as
         if (filenames is null) or (filenames.count=0) then return -1; end if;
         if (files is null) or (files.count=0) then return -2; end if;
         if filenames.count <> files.count then return -3; end if;
-        -- по всем адресатам
+        -- ГЇГ® ГўГ±ГҐГ¬ Г Г¤Г°ГҐГ±Г ГІГ Г¬
         for j in recipList.first .. recipList.last
         loop
           begin
@@ -243,9 +243,9 @@ as
                       l_errmsg  := dbms_utility.format_error_stack()||chr(13)||chr(10)||dbms_utility.format_error_backtrace();
                       SaveToTab(recipList(j), filenames(i), files(i), l_errmsg);
                   end;
-              end loop; -- по всем адресатам одного файла
+              end loop; -- ГЇГ® ГўГ±ГҐГ¬ Г Г¤Г°ГҐГ±Г ГІГ Г¬ Г®Г¤Г­Г®ГЈГ® ГґГ Г©Г«Г 
               ftp.logout(l_conn);
-          exception -- при логине в систему и определении ее параметров, произошла ошибка
+          exception -- ГЇГ°ГЁ Г«Г®ГЈГЁГ­ГҐ Гў Г±ГЁГ±ГІГҐГ¬Гі ГЁ Г®ГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГЁ ГҐГҐ ГЇГ Г°Г Г¬ГҐГІГ°Г®Гў, ГЇГ°Г®ГЁГ§Г®ГёГ«Г  Г®ГёГЁГЎГЄГ 
             when others then 
               l_errmsg  := dbms_utility.format_error_stack()||chr(13)||chr(10)||dbms_utility.format_error_backtrace();
               for i in filenames.first .. filenames.last
@@ -257,7 +257,7 @@ as
     else
        for i in filenames.first .. filenames.last
        loop
-         SaveToTab(null, filenames(i), files(i), 'нет списка получателей');
+         SaveToTab(null, filenames(i), files(i), 'Г­ГҐГІ Г±ГЇГЁГ±ГЄГ  ГЇГ®Г«ГіГ·Г ГІГҐГ«ГҐГ©');
        end loop;
        l_sendres := -10;
     end if;
