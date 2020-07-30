@@ -1,11 +1,11 @@
 CREATE OR REPLACE TYPE "TSMS"
 as object 
 (
-  recip         varchar2(15),   -- один получатель
-  recipients    TStringList,    -- список получателей
-  sender        varchar2(20),   -- кем подписываться
-  message       varchar2(1000), -- тело сообщения
-  delayed       date,           -- если доставка отложена, то здесь конкретная дата отправки
+  recip         varchar2(15),   -- Г®Г¤ГЁГ­ ГЇГ®Г«ГіГ·Г ГІГҐГ«Гј
+  recipients    TStringList,    -- Г±ГЇГЁГ±Г®ГЄ ГЇГ®Г«ГіГ·Г ГІГҐГ«ГҐГ©
+  sender        varchar2(20),   -- ГЄГҐГ¬ ГЇГ®Г¤ГЇГЁГ±Г»ГўГ ГІГјГ±Гї
+  message       varchar2(1000), -- ГІГҐГ«Г® Г±Г®Г®ГЎГ№ГҐГ­ГЁГї
+  delayed       date,           -- ГҐГ±Г«ГЁ Г¤Г®Г±ГІГ ГўГЄГ  Г®ГІГ«Г®Г¦ГҐГ­Г , ГІГ® Г§Г¤ГҐГ±Гј ГЄГ®Г­ГЄГ°ГҐГІГ­Г Гї Г¤Г ГІГ  Г®ГІГЇГ°Г ГўГЄГЁ
   member procedure SetRecipient(p_recipient varchar2),
   member procedure SetRecipient(p_recipientList TStringList default null),
   member procedure SendSmsWoCommit(p_delayed date default null),
@@ -42,19 +42,19 @@ as
          self.message := self.message || '(osuser='||usr||')';
       end if;
       msd := case 
-when usr='SPARSHUKOV'         then '79282011384'
-when usr='SERGEY.PARSHUKOV'   then '79282011384'                            
-when usr='RKRIKUNOV'          then '79289072396'
-when usr='RUSLAN.KRIKUNOV'    then '79289072396'                      
-when usr='SKHIZHNJAK'         then '79282011384'                      
-when usr='VIVAKIN'            then '79381112264'
-when usr='VLADIMIR.IVAKIN'    then '79381112264'
-when usr='ALEXANDER.TARANENKO'then '79282019951'
---when usr='SERGEY.TARASENKO'   then '79282012680'
---when usr='TARASENKO_SS'       then '79282012680'
-when usr='LEVENETS_EE'        then '79282015240'
-when usr='ANTIBIOTIC'         then '79282015240'
-                              else '79282011384' end; 
+when usr='SPARSHUKOV'         then '7928000000'
+when usr='SERGEY.PARSHUKOV'   then '7928000000'                            
+when usr='RKRIKUNOV'          then '7928000000'
+when usr='RUSLAN.KRIKUNOV'    then '7928000000'                      
+when usr='SKHIZHNJAK'         then '7928000000'                      
+when usr='VIVAKIN'            then '7928000000'
+when usr='VLADIMIR.IVAKIN'    then '7928000000'
+when usr='ALEXANDER.TARANENKO'then '7928000000'
+--when usr='SERGEY.TARASENKO'   then '7928000000'
+--when usr='TARASENKO_SS'       then '7928000000'
+when usr='LEVENETS_EE'        then '7928000000'
+when usr='ANTIBIOTIC'         then '7928000000'
+                              else '7928000000' end; 
       Recipients := TStringList( msd );
     end if;
   end;
@@ -95,7 +95,7 @@ when usr='ANTIBIOTIC'         then '79282015240'
   end;
 
   ------------------------------------------------------------------
-  -- конструктор
+  -- ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°
   static function smsCreate( p_message   varchar2, p_recipient varchar2 default null
                            ) return TSms
   is
